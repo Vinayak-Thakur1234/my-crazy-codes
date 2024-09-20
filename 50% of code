@@ -1,0 +1,56 @@
+import pygame
+from pygame.locals import (
+    K_DOWN,
+    K_UP,
+    K_LEFT,
+    K_RIGHT,
+    QUIT,
+    KEYDOWN
+)
+
+pygame.init()
+screen = pygame.display.set_mode((500, 600))
+pygame.display.set_caption("food game")
+
+image = pygame.image.load('fries_game.png')
+image_surface = pygame.Surface((image.get_width(), image.get_height()))
+image_surface.blit(image, (0, 0))
+
+image2 = pygame.image.load('Sauce_for_game_actually_FR.png')
+image_surface2 = pygame.Surface((image2.get_width(), image2.get_height()))
+image_surface2.blit(image2, (0, 0))
+
+x = 100
+y = 100
+boundary_left = 0
+boundary_right = screen.get_width() - image_surface.get_width()
+boundary_top = 0
+boundary_bottom = screen.get_height() - image_surface.get_height()
+
+run = True
+while run:
+    screen.fill((0, 0, 0))
+    screen.blit(image_surface, (x, y))
+    screen.blit(image_surface2, (200, 200))  # blit image_surface2 at a different position
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            run = False
+        elif event.type == KEYDOWN:
+            if event.key == K_DOWN:
+                y += 50
+            elif event.key == K_UP:
+                y -= 50
+            elif event.key == K_RIGHT:
+                x += 50
+            elif event.key == K_LEFT:
+                x -= 50
+            if x < boundary_left:
+                x = boundary_left
+            elif x > boundary_right:
+                x = boundary_right
+            if y < boundary_top:
+                y = boundary_top
+            elif y > boundary_bottom:
+                y = boundary_bottom
+    pygame.display.update()
+pygame.quit()
